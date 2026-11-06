@@ -80,18 +80,14 @@ export function Home() {
   // ScrollSpy logic
   useEffect(() => {
     const handleScroll = () => {
-      const sections = ['home', 'products', 'about', 'contact'];
-      const scrollPos = window.scrollY + 140;
+      const sections = ['contact', 'about', 'products', 'home'];
+      const scrollPos = window.scrollY + 180;
 
       for (const id of sections) {
         const el = document.getElementById(id);
-        if (el) {
-          const top = el.offsetTop;
-          const height = el.offsetHeight;
-          if (scrollPos >= top && scrollPos < top + height) {
-            setActiveSection(id);
-            break;
-          }
+        if (el && scrollPos >= el.offsetTop) {
+          setActiveSection(id);
+          break;
         }
       }
     };

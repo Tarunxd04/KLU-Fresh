@@ -124,8 +124,11 @@ ul { list-style: none; }
 .main-nav {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 8px;
   flex-shrink: 0;
+}
+.main-nav a[href="#contact"] {
+  margin-left: 6px;
 }
 .nav-link {
   font-family: var(--font-head);
@@ -432,6 +435,7 @@ ul { list-style: none; }
   background: var(--white);
   border-top: 1px solid var(--gray-line);
   border-bottom: 1px solid var(--gray-line);
+  margin-bottom: 80px;
 }
 .about-grid {
   display: grid;
@@ -469,7 +473,11 @@ ul { list-style: none; }
 }
 
 /* ============= FOOTER ============= */
-.site-footer { background: var(--dark-green); color: var(--pale-green); margin-top: 40px; }
+.site-footer {
+  background: var(--dark-green);
+  color: var(--pale-green);
+  margin-top: 80px;
+}
 .footer-grid {
   width: 100%;
   max-width: none;

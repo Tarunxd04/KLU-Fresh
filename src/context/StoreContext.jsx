@@ -18,6 +18,9 @@ export function StoreProvider({ children }) {
               if (p.name === 'Fresh Tomatoes' || p.name === 'Fresh Tomato') {
                 return { ...p, name: 'Tomato', category: 'Vegetables', image: 'Images/Tomato.jpg', emoji: '🍅' };
               }
+              if (p.name === 'Mushroom' && (!p.image || p.image === '')) {
+                return { ...p, image: 'Images/Mushroom.jpg' };
+              }
               return p;
             });
         }
