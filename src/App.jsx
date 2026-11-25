@@ -15,6 +15,7 @@ export function App() {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Home />} />
       <Route path="/signup" element={<Home />} />
+      <Route path="/products/:productId" element={<Home />} />
 
       {/* Admin routes with protection */}
       <Route

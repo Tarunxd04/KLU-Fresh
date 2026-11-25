@@ -21,10 +21,10 @@ export function CartDrawer({ isOpen, onClose, onCheckout }) {
         id="cartOverlay"
         onClick={onClose}
       />
-      <aside className={`cart-sidebar ${isOpen ? 'open' : ''}`} id="cartSidebar" data-lenis-prevent>
+      <aside className={`cart-sidebar ${isOpen ? 'open' : ''}`} id="cartSidebar" aria-label="Shopping cart" aria-hidden={!isOpen} inert={!isOpen ? '' : undefined} data-lenis-prevent>
         <div className="cart-header">
-          <h3>Your Cart</h3>
-          <button className="close-btn" id="closeCart" onClick={onClose}>
+          <h3>Your Cart <small>({totals.count} items)</small></h3>
+          <button className="close-btn" aria-label="Close cart" id="closeCart" onClick={onClose}>
             ✕
           </button>
         </div>
@@ -57,15 +57,18 @@ export function CartDrawer({ isOpen, onClose, onCheckout }) {
                         className="qty-btn"
                         data-id={p.id}
                         data-delta="-1"
+                        aria-label={`Decrease ${p.name} quantity`}
                         onClick={() => changeQty(p.id, -1)}
                       >
                         −
                       </button>
-                      <span>{item.qty}</span>
+                      <span className="qty-num">{item.qty}</span>
                       <button
                         className="qty-btn"
                         data-id={p.id}
                         data-delta="1"
+                        aria-label={`Increase ${p.name} quantity`}
+                        disabled={item.qty >= p.stock}
                         onClick={() => changeQty(p.id, 1)}
                       >
                         +
@@ -89,7 +92,7 @@ export function CartDrawer({ isOpen, onClose, onCheckout }) {
           <div className="coupon-row">
             <input
               type="text"
-              id="couponInput"
+              aria-label="Coupon code" id="couponInput"
               placeholder="Enter coupon code (try KLU10)"
               value={couponCode}
               onChange={(e) => setCouponCode(e.target.value)}
@@ -128,6 +131,7 @@ export function CartDrawer({ isOpen, onClose, onCheckout }) {
           <button
             className="btn btn-primary full-width"
             id="checkoutBtn"
+            disabled={cart.length === 0}
             onClick={onCheckout}
           >
             Proceed to Checkout

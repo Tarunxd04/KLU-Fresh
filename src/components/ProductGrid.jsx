@@ -1,12 +1,13 @@
 import React from 'react';
 import { ProductCard } from './ProductCard';
 
-export function ProductGrid({ products }) {
+export function ProductGrid({ products, onReset }) {
   if (products.length === 0) {
     return (
-      <p className="no-results" id="noResults" style={{ display: 'block' }}>
-        No products found 😕
-      </p>
+      <div className="empty-results" id="noResults">
+        <h3>No groceries found</h3><p>Try a different product name or browse all categories.</p>
+        <button className="btn btn-primary" onClick={onReset}>Browse all products</button>
+      </div>
     );
   }
 

@@ -1,4 +1,7 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { Icon } from './Icon';
+import { QuantityControl } from './QuantityControl';
 import { formatPrice, stockInfo, starString, discountPercent, imageSrc } from '../utils/formatters';
 import { useCart } from '../context/CartContext';
 
@@ -13,7 +16,7 @@ export function ProductCard({ product, index = 0 }) {
 
   return (
     <div className={`product-card scroll-reveal ${staggerClass}`}>
-      <div className="product-image">
+      <Link to={`/products/${product.id}`} className="product-image" aria-label={`View ${product.name}`}>
         {product.image && !imgError ? (
           <img
             src={imageSrc(product.image)}
@@ -25,19 +28,21 @@ export function ProductCard({ product, index = 0 }) {
           <span className="product-emoji">{product.emoji || '🛒'}</span>
         )}
         {discount > 0 && <span className="discount-sticker">-{discount}%</span>}
-      </div>
+      </Link>
 
       <button
         className="wishlist-toggle"
         data-id={product.id}
         title="Toggle Wishlist"
+        aria-label={`Save ${product.name} to wishlist`}
+        aria-pressed={isWished}
         onClick={() => toggleWishlist(product.id)}
       >
-        {isWished ? '❤️' : '🤍'}
+        <Icon name="heart" size={19} />
       </button>
 
       <div className="product-category">{product.category}</div>
-      <div className="product-name">{product.name}</div>
+      <Link to={`/products/${product.id}`} className="product-name">{product.name}</Link>
       <div className="product-qty">{product.qty || '1 unit'}</div>
       <div className="product-rating">{starString(product.rating)}</div>
       <div className={`product-stock ${stock.cls}`}>{stock.label}</div>
@@ -49,14 +54,7 @@ export function ProductCard({ product, index = 0 }) {
         )}
       </div>
 
-      <button
-        className="add-cart-btn"
-        data-id={product.id}
-        disabled={product.stock === 0}
-        onClick={() => addToCart(product.id)}
-      >
-        {product.stock === 0 ? 'Out of Stock' : 'Add to Cart'}
-      </button>
+      <QuantityControl product={product} />
     </div>
   );
 }

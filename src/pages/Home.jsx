@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Lenis from 'lenis';
 import { Navbar } from '../components/Navbar';
 import { Hero } from '../components/Hero';
@@ -17,7 +17,9 @@ import { useAuth } from '../context/AuthContext';
 import { useStore } from '../context/StoreContext';
 import { useCart } from '../context/CartContext';
 import { useToast } from '../context/ToastContext';
+import { ProductDetails } from '../components/ProductDetails';
 import '../styles/storefront.css';
+import '../styles/polish.css';
 
 export function Home() {
   const { user, isAuthenticated, isAdmin } = useAuth();
@@ -26,6 +28,18 @@ export function Home() {
   const { showToast } = useToast();
   const location = useLocation();
   const navigate = useNavigate();
+  const { productId } = useParams();
+  useEffect(() => {
+    if (productId) window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [productId]);
+  useEffect(() => {
+    const header = document.querySelector('.site-header');
+    const update = () => document.documentElement.style.setProperty('--header-height', `${header.offsetHeight}px`);
+    const observer = new ResizeObserver(update);
+    observer.observe(header);
+    update();
+    return () => observer.disconnect();
+  }, []);
 
   // Search, filter, sort state
   const [searchTerm, setSearchTerm] = useState('');
@@ -114,12 +128,17 @@ export function Home() {
 
   const handleNavClick = (e, sectionId) => {
     e.preventDefault();
-    scrollToSection(sectionId);
+    if (productId) {
+      navigate('/');
+      setTimeout(() => scrollToSection(sectionId), 100);
+    } else scrollToSection(sectionId);
     setActiveSection(sectionId);
   };
 
   const handleSearchChange = (val) => {
     setSearchTerm(val);
+    setActiveCategory('all');
+    if (productId) navigate('/');
     if (val.trim().length > 0) {
       scrollToSection('products');
     }
@@ -232,7 +251,7 @@ export function Home() {
     return () => {
       observer.disconnect();
     };
-  }, [filteredProducts]);
+  }, [filteredProducts, productId]);
 
   return (
     <div id="userStorefrontView">
@@ -253,6 +272,7 @@ export function Home() {
         onOpenAdmin={() => navigate('/admin/dashboard')}
       />
 
+      {productId ? <ProductDetails id={productId} /> : <>
       <Hero onShopNow={handleShopNow} />
 
       <section className="marketplace section" id="products" aria-label="Shop groceries">
@@ -267,11 +287,12 @@ export function Home() {
               {filteredProducts.length} product{filteredProducts.length !== 1 ? 's' : ''}
             </p>
           </div>
-          <ProductGrid products={filteredProducts} />
+          <ProductGrid products={filteredProducts} onReset={handleShopNow} />
         </div>
       </section>
 
       <AboutSection />
+      </>}
 
       <Footer />
 

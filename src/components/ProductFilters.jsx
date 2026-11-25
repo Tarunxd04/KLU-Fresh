@@ -1,4 +1,5 @@
 import React from 'react';
+import { Icon } from './Icon';
 import { CATEGORIES, CATEGORY_ICONS } from '../utils/constants';
 
 export function ProductFilters({ activeCategory, onCategoryChange }) {
@@ -11,7 +12,7 @@ export function ProductFilters({ activeCategory, onCategoryChange }) {
             className={`category-option ${activeCategory === category ? 'selected' : ''}`}
             aria-pressed={activeCategory === category}
             onClick={() => onCategoryChange(category)}>
-            <span className="category-icon" aria-hidden="true">{category === 'all' ? '▦' : CATEGORY_ICONS[category]}</span>
+            <span className="category-icon" aria-hidden="true"><Icon name={category === 'all' ? 'grid' : category === 'Dairy' || category === 'Personal Care' ? 'bottle' : category === 'Staples' ? 'wheat' : category === 'Snacks' || category === 'Protein' ? 'box' : 'leaf'} /></span>
             <span>{category === 'all' ? 'All Products' : category}</span>
           </button>
         ))}
