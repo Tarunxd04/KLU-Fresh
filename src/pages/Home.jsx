@@ -17,7 +17,7 @@ import { useAuth } from '../context/AuthContext';
 import { useStore } from '../context/StoreContext';
 import { useCart } from '../context/CartContext';
 import { useToast } from '../context/ToastContext';
-import { discountPercent } from '../utils/formatters';
+import '../styles/storefront.css';
 
 export function Home() {
   const { user, isAuthenticated, isAdmin } = useAuth();
@@ -30,7 +30,6 @@ export function Home() {
   // Search, filter, sort state
   const [searchTerm, setSearchTerm] = useState('');
   const [activeCategory, setActiveCategory] = useState('all');
-  const [activeSort, setActiveSort] = useState('default');
   const [activeSection, setActiveSection] = useState('home');
 
   // Modals & Drawers state
@@ -102,7 +101,7 @@ export function Home() {
       const headerHeight = document.querySelector('.site-header')?.offsetHeight || 80;
       const targetOffset = -headerHeight + 5;
       if (lenisRef.current) {
-        lenisRef.current.scrollTo(el, { offset: targetOffset });
+        lenisRef.current.scrollTo(el, { offset: targetOffset, immediate: window.matchMedia('(prefers-reduced-motion: reduce)').matches });
       } else {
         const targetPos = el.getBoundingClientRect().top + window.pageYOffset + targetOffset;
         window.scrollTo({
@@ -131,12 +130,10 @@ export function Home() {
   };
 
   const handleShopNow = () => {
+    setActiveCategory('all');
+    setSearchTerm('');
     scrollToSection('products');
-  };
-
-  const handleViewDeals = () => {
-    setActiveSort('discount');
-    scrollToSection('products');
+    setActiveSection('products');
   };
 
   // Orders visible to current user
@@ -197,19 +194,8 @@ export function Home() {
       );
     }
 
-    // Sort
-    if (activeSort === 'price-low') {
-      list.sort((a, b) => a.price - b.price);
-    } else if (activeSort === 'price-high') {
-      list.sort((a, b) => b.price - a.price);
-    } else if (activeSort === 'rating') {
-      list.sort((a, b) => (b.rating || 0) - (a.rating || 0));
-    } else if (activeSort === 'discount') {
-      list.sort((a, b) => discountPercent(b) - discountPercent(a));
-    }
-
     return list;
-  }, [products, activeCategory, searchTerm, activeSort]);
+  }, [products, activeCategory, searchTerm]);
 
   // Subtle scroll entrance animations via Intersection Observer
   useEffect(() => {
@@ -267,23 +253,20 @@ export function Home() {
         onOpenAdmin={() => navigate('/admin/dashboard')}
       />
 
-      <Hero onShopNow={handleShopNow} onViewDeals={handleViewDeals} />
+      <Hero onShopNow={handleShopNow} />
 
-      <section className="section" id="products">
-        <div id="productsSection">
-          <div className="section-heading scroll-reveal">
-            <h2>Fresh Picks For You</h2>
-            <p>Quality groceries at honest prices</p>
+      <section className="marketplace section" id="products" aria-label="Shop groceries">
+        <ProductFilters activeCategory={activeCategory} onCategoryChange={setActiveCategory} />
+        <div id="productsSection" className="catalog-content">
+          <div className="catalog-heading">
+            <div>
+              <h2>{activeCategory === 'all' ? 'All Products' : activeCategory}</h2>
+              <p>Quality groceries at honest prices</p>
+            </div>
+            <p id="resultsCount" role="status" aria-live="polite">
+              {filteredProducts.length} product{filteredProducts.length !== 1 ? 's' : ''}
+            </p>
           </div>
-
-          <ProductFilters
-            activeCategory={activeCategory}
-            onCategoryChange={setActiveCategory}
-            activeSort={activeSort}
-            onSortChange={setActiveSort}
-            resultsCount={filteredProducts.length}
-          />
-
           <ProductGrid products={filteredProducts} />
         </div>
       </section>

@@ -1,49 +1,21 @@
 import React from 'react';
-import { CATEGORIES } from '../utils/constants';
+import { CATEGORIES, CATEGORY_ICONS } from '../utils/constants';
 
-export function ProductFilters({
-  activeCategory,
-  onCategoryChange,
-  activeSort,
-  onSortChange,
-  resultsCount,
-}) {
+export function ProductFilters({ activeCategory, onCategoryChange }) {
   return (
-    <div className="filters-bar scroll-reveal">
-      <div className="filter-group" id="filterCategoryGroup">
-        <label>Category</label>
-        <select
-          id="filterCategory"
-          value={activeCategory}
-          onChange={(e) => onCategoryChange(e.target.value)}
-        >
-          <option value="all">All</option>
-          {CATEGORIES.map((cat) => (
-            <option key={cat} value={cat}>
-              {cat}
-            </option>
-          ))}
-        </select>
-      </div>
-
-      <div className="filter-group">
-        <label>Sort by</label>
-        <select
-          id="sortSelect"
-          value={activeSort}
-          onChange={(e) => onSortChange(e.target.value)}
-        >
-          <option value="default">Featured</option>
-          <option value="price-low">Price: Low → High</option>
-          <option value="price-high">Price: High → Low</option>
-          <option value="rating">Rating</option>
-          <option value="discount">Discount</option>
-        </select>
-      </div>
-
-      <div className="results-count" id="resultsCount">
-        {resultsCount} product{resultsCount !== 1 ? 's' : ''}
-      </div>
-    </div>
+    <aside className="category-sidebar" aria-labelledby="category-heading">
+      <h2 id="category-heading">Categories</h2>
+      <nav className="category-list" aria-label="Product categories">
+        {['all', ...CATEGORIES].map((category) => (
+          <button type="button" key={category}
+            className={`category-option ${activeCategory === category ? 'selected' : ''}`}
+            aria-pressed={activeCategory === category}
+            onClick={() => onCategoryChange(category)}>
+            <span className="category-icon" aria-hidden="true">{category === 'all' ? '▦' : CATEGORY_ICONS[category]}</span>
+            <span>{category === 'all' ? 'All Products' : category}</span>
+          </button>
+        ))}
+      </nav>
+    </aside>
   );
 }
