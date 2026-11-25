@@ -1,0 +1,86 @@
+{
+  "generator": "Built-in image_gen",
+  "promptTemplate": "Use case: product-mockup. Create one square photorealistic grocery catalog product image of {subject}. Center the product fully inside the frame with comfortable margins on a clean warm white background, soft natural studio light, realistic textures. No collage, no people, no watermark, no promotional claims. This is the replacement image for the product \"{name}\" in a grocery demo website.",
+  "images": [
+    {
+      "name": "Eggs",
+      "subject": "a carton containing twelve chicken eggs, some white and some brown",
+      "path": "public/Images/Eggs.jpg"
+    },
+    {
+      "name": "Guava",
+      "subject": "fresh green guavas, one cut in half revealing pink flesh and seeds",
+      "path": "public/Images/Guava.jpg"
+    },
+    {
+      "name": "Turmeric",
+      "subject": "a small bowl of golden yellow turmeric powder beside fresh turmeric roots",
+      "path": "public/Images/Turmeric.jpg"
+    },
+    {
+      "name": "Mutton Legs",
+      "subject": "raw butchered lamb leg cuts on a clean tray, uncooked grocery meat",
+      "path": "public/Images/Mutton Legs.jpg"
+    },
+    {
+      "name": "Mass Gainer",
+      "subject": "a generic supplement tub clearly labeled \"MASS GAINER\"",
+      "path": "public/Images/Mass Gainer.jpg"
+    },
+    {
+      "name": "Peanut Nuts",
+      "subject": "a bowl of shelled peanuts with a few peanut shells beside it",
+      "path": "public/Images/Peanut Nuts.jpg"
+    },
+    {
+      "name": "Atta",
+      "subject": "a bowl of whole wheat flour with wheat ears and a plain flour bag",
+      "path": "public/Images/Atta.jpg"
+    },
+    {
+      "name": "Oats",
+      "subject": "a bowl of dry rolled oat flakes with a wooden scoop",
+      "path": "public/Images/Oats.jpg"
+    },
+    {
+      "name": "Sweet Potato",
+      "subject": "purple brown skinned sweet potatoes, one sliced to reveal orange flesh",
+      "path": "public/Images/Sweet Potato.jpg"
+    },
+    {
+      "name": "Hair Oil",
+      "subject": "a small hair oil bottle clearly labeled \"HAIR OIL\"",
+      "path": "public/Images/Hair Oil.jpg"
+    },
+    {
+      "name": "Deodorant",
+      "subject": "an aerosol deodorant can clearly labeled \"DEODORANT\"",
+      "path": "public/Images/Deodorant.jpg"
+    },
+    {
+      "name": "Whole Mutton",
+      "subject": "fresh uncooked boneless and bone-in lamb meat pieces on a clean butcher tray, grocery product",
+      "path": "public/Images/Whole Mutton.jpg"
+    },
+    {
+      "name": "Creatine",
+      "subject": "a generic supplement tub clearly labeled \"CREATINE MONOHYDRATE\"",
+      "path": "public/Images/Creatine.jpg"
+    },
+    {
+      "name": "Conditioner",
+      "subject": "a hair conditioner bottle clearly labeled \"CONDITIONER\"",
+      "path": "public/Images/Conditioner.jpg"
+    },
+    {
+      "name": "Lays Chips",
+      "subject": "one recognizable yellow Lay's Classic potato chips packet with a few potato chips beside it",
+      "path": "public/Images/Lays Chips.jpg"
+    },
+    {
+      "name": "Protein Powder",
+      "subject": "a generic supplement tub clearly labeled \"PROTEIN POWDER\"",
+      "path": "public/Images/Protein Powder.jpg"
+    }
+  ]
+}
